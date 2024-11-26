@@ -4,8 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          fontWeight: {
+            thin: '100',
+      hairline: '100',
+      extralight: '200',
+      light: '300',
+      normal: '400',
+      medium: '500',
+      semibold: '600',
+      bold: '700',
+      extrabold: '800',
+      'extra-bold': '800',
+      black: '900',
+        },
+          extend: {
+            colors: {
+              clifford: '#da373d',
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    
+<body >
+  <!-- start header  -->
+  <div class="min-h-screen bg-[url('../img/leader.jpg')] bg-top bg-cover bg-no-repeat ">
+    <div class="w-full min-h-[100px] bg-black bg-opacity-70 p-24 flex justify-between">
+        <div class="w-[60%] bg-[url('../img/stadium.webp')] bg-center bg-no-repeat bg-cover h-screen grid grid-cols-5 grid-rows-4  gap-1 p-4 ">
+            <!-- Grid Items -->
+            <div class=" bg-opacity-30 border border-white bg-[url('img/badge_gold.webp')] bg-center bg-no-repeat bg-cover w-full h-full flex flex-col justify-center items-center">
+              <div class="flex justify-start ">
+                <div class="text-xs text-[#393218]">
+                  <p class="font-extra-bold">90</p>
+                  <p class="font-semibold">cf</p>
+                </div>
+                <div class="text-center text-xs text-[#393218] font-extra-bold">
+                  <img src="https://cdn.sofifa.net/players/158/023/25_120.png" alt="messi" class="w-[70px]">
+                  <p>Messi</p>
+                </div>
+              </div>
+              <div class="boxes text-[9px] mt-4 text-[#393218] grid grid-cols-6 grid-rows-2 gap-[1px]  justify-center items-center" >
+                <div>PAC</div>
+                <div>SHO</div>
+                <div>PAS</div>
+                <div>DRI</div>
+                <div>DEF</div>
+                <div>PHY</div>
+                <div class="font-extra-bold">80</div>
+                <div class="font-extra-bold">87</div>
+                <div class="font-extra-bold">90</div>
+                <div class="font-extra-bold">94</div>
+                <div class="font-extra-bold">33</div>
+                <div class="font-extra-bold">64</div>
+              </div>
+              <div class="flages grid grid-cols-2 gap-4 items-center">
+                <img src="https://cdn.sofifa.net/flags/ar.png" alt="" class="w-[10px]">
+                <img src="https://cdn.sofifa.net/meta/team/239235/120.png" alt="" class="w-[10px]">
+              </div>
+            </div>
+            <div >
+              <img src="img/badge_gold.webp" alt="" class="w-full h-full">
+            </div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">3</div>
+            <div >
+              <img src="img/badge_ballon_dor.webp" alt="" class="w-full h-full">
+            </div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">5</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">6</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">7</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">8</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">
+            </div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">10</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">11</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">12</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">13</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">14</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">15</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">16</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">17</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">18</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">19</div>
+            <div class="bg-white bg-opacity-30 border border-white  text-center">20</div>
+        </div>
+        <div class="w-[30%] text-white bg-cyan-900 bg-opacity-30 rounded-lg flex justify-center py-12">
+          <form action="#" id="form" class="flex flex-col space-y-2 text-center">
+            <label for="name" class="">Players name</label>
+            <input type="text" name="" id="name" class="p-2 text-black rounded-md">
+            <label for="position" class="">Players Position</label>
+            <input type="text" name="" id="name" class="p-2 text-black rounded-md">
+            <label for="pac" class="">PAC</label>
+            <input type="number" name="" id="pac" class="p-2 text-black rounded-md">
+            <label for="shoot" class="">Shoot</label>
+            <input type="number" name="" id="shoot" class="p-2 text-black rounded-md">
+            <label for="pass" class="">pass</label>
+            <input type="number" name="" id="pass" class="p-2 text-black rounded-md">
+            <label for="Driblle" class="">Driblle</label>
+            <input type="number" name="" id="driblle" class="p-2 text-black rounded-md">
+            <label for="Defonce" class="">Defonce</label>
+            <input type="number" name="" id="Defonce" class="p-2 text-black rounded-md">
+            <label for="physique" class="">Physique</label>
+            <input type="number" name="" id="physique" class="p-2 text-black rounded-md">
+            <button class="bg-green-500 w-[120px] m-auto p-2 rounded-full">Submit</button>
+          </form>
+        </div>
+    </div>
+</div>
+
+  <!-- end header  -->
+  <script src="js/main.js"></script>
 </body>
 </html>
