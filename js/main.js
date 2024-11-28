@@ -4,14 +4,14 @@ let position = document.getElementById('position');
 let pac = document.getElementById('pac');
 let shoot = document.getElementById('shoot');
 let pass = document.getElementById('pass');
-let driblle = document.getElementById('driblle');
+let driblle = document.getElementById('dribble'); // Fixed typo: driblle -> dribble
 let defonce = document.getElementById('defonce');
 let physique = document.getElementById('physique');
 let position_import = document.getElementById('positionImport');
 let pac_import = document.getElementById('pacImport');
 let shoot_import = document.getElementById('shootImport');
 let pass_import = document.getElementById('passImport');
-let driblle_import = document.getElementById('dribbleImport');
+let dribble_import = document.getElementById('dribbleImport'); // Fixed typo here too
 let defonce_import = document.getElementById('defenceImport');
 let physique_import = document.getElementById('physiqueImport');
 let rate_import = document.getElementById('rateimport');
@@ -22,6 +22,7 @@ const importTab = document.getElementById('importTab');
 const createPlayer = document.getElementById('createPlayer');
 const importPlayers = document.getElementById('importPlayers');
 
+// Tab switching between Create Player and Import Players tabs
 createTab.addEventListener('click', () => {
   createTab.classList.add('bg-white', 'text-cyan-900');
   createTab.classList.remove('text-gray-300');
@@ -40,27 +41,32 @@ importTab.addEventListener('click', () => {
   importPlayers.classList.remove('hidden');
 });
 
+// Fetch data from JSON
 get_from_json();
 
+// Form validation for the Create Player form
 createForm.addEventListener('submit', function(e) {
   e.preventDefault();
-  if (player_name.value.trim() == '' || position.value.trim() == '' || pac.value.trim() == '' || defonce.value.trim() == '' || shoot.value.trim() == '' || driblle.value.trim() == '' || physique.value.trim() == '') {
+  if (player_name.value.trim() == '' || position.value.trim() == '' || pac.value.trim() == '' || defonce.value.trim() == '' || shoot.value.trim() == '' || dribble.value.trim() == '' || physique.value.trim() == '') {
     console.log('Please fill in all fields');
     return;
   }
   console.log('Player data is valid');
 });
 
+// Event listener for the import player dropdown
 document.getElementById('importedName').addEventListener('change', function() {
   fill_field();
   document.getElementById('modal').style.display = 'flex';
 });
 
-document.getElementById('importForm').addEventListener('submit',function(e){
+// Event listener for the import form submit action
+document.getElementById('importForm').addEventListener('submit',function(e) {
   e.preventDefault();
   fill_field();
 });
 
+// Function to fetch player data from an external JSON
 function get_from_json() {
   let conn = new XMLHttpRequest();
   conn.open('GET', 'https://achraf.brofortech.com/pl.json', true);
@@ -68,12 +74,14 @@ function get_from_json() {
   conn.onreadystatechange = function() {
     if (conn.readyState == 4 && conn.status == 200) {
       data = JSON.parse(conn.responseText);
-      add_to_inport(data);
+      add_to_import(data);
+      addBenchOption();
     }
   };
 }
 
-function add_to_inport(data) {
+// Add players to the import dropdown
+function add_to_import(data) {
   data.players.forEach(function(player) {
     let option = document.createElement('option');
     option.value = player.name;
@@ -82,6 +90,7 @@ function add_to_inport(data) {
   });
 }
 
+// Fill form fields with imported player data
 function fill_field() {
   let selected_player_name = document.getElementById('importedName').value;
   
@@ -96,10 +105,11 @@ function fill_field() {
         return;
       }
 
+      // Update the fields with imported player data
       position_import.value = player_info.position;
       shoot_import.value = player_info.shooting;
       pass_import.value = player_info.passing;
-      driblle_import.value = player_info.dribbling;
+      dribble_import.value = player_info.dribbling;
       defonce_import.value = player_info.defending;
       physique_import.value = player_info.physical;
       rate_import.value = player_info.rating;
@@ -107,8 +117,9 @@ function fill_field() {
       let img = player_info.photo;
       let name = player_info.name;
 
+      // Generate the HTML card for the player
       let temp_card = `
-        <div class="cards bg-[url('img/badge_gold.webp')] bg-center bg-no-repeat bg-cover w-1/2 h-[220px] flex flex-col justify-center items-center" data-id="${player_info.name}">
+        <div class="cards bg-[url('img/badge_gold.webp')] bg-center bg-no-repeat bg-cover w-auto h-full flex flex-col justify-center items-center" data-id="${player_info.name}">
           <div class="flex justify-start">
             <div class="text-xs text-[#393218]">
               <p class="font-extra-bold">${player_info.rating}</p>
@@ -146,7 +157,8 @@ function fill_field() {
       
       show_icon();
       edit_modal(name);
-      
+
+      // Add the player card when import button is clicked
       document.getElementById('btn_import').addEventListener('click', function() {
         document.getElementById('cards-container').innerHTML += temp_card;
         document.getElementById('modal').style.display = "none";
@@ -161,24 +173,27 @@ function fill_field() {
   }
 }
 
+// Check if the player is already in the list
 function isPlayerInList(playerName) {
   return Array.from(allcards).some(card => card.getAttribute('data-id') === playerName);
 }
 
+// Show edit icon on hover over player card
 function show_icon() {
   allcards.forEach(card => {
     let editIcon = card.querySelector('.edit');
     
-    card.addEventListener('mouseenter', function(){
+    card.addEventListener('mouseenter', function() {
       editIcon.style.display = "flex";
     });
 
-    card.addEventListener('mouseleave', function(){
+    card.addEventListener('mouseleave', function() {
       editIcon.style.display = "none";
     });
   });
 }
 
+// Open edit modal when edit icon is clicked
 function edit_modal(name) {
   editbtn.forEach(btn => {
     btn.addEventListener('click', function () {
@@ -202,29 +217,77 @@ function edit_modal(name) {
         const option = document.createElement('option');
         option.value = player_info.position;
         option.textContent = player_info.position;
-        positionSelect.appendChild(option);
+        positionSelect.appendChild(option);   
+        let benchOption = document.createElement('option');
+        benchOption.value = 'bench';
+        benchOption.textContent = 'Bench';
+        positionSelect.appendChild(benchOption);
         console.log('Player position selected: ', player_info.position);
       }
     });
   });
 }
-document.getElementById('addtofield').addEventListener('click',function(e){
+
+// Add "bench" option to position select dropdown
+function addBenchOption() {
+  let positionSelect = document.getElementById('positionedit');
+  let benchOption = document.createElement('option');
+  benchOption.value = 'bench';
+  benchOption.textContent = 'Bench';
+  positionSelect.appendChild(benchOption); // Add "bench" to the position options
+}
+
+// Handle adding players to the field (or bench)
+document.getElementById('addtofield').addEventListener('click', function(e) {
   e.preventDefault();
-  
-allcards.forEach((card) => {
+  let addedPlayers = new Set(); // Track added players to avoid duplicates
 
-  const playerName = card.getAttribute('data-id');
-  
+  allcards.forEach((card) => {
+    const playerName = card.getAttribute('data-id');
+    const playerInfo = data.players.find(player => player.name === playerName);
 
-  const playerInfo = data.players.find(player => player.name === playerName);
-  
-  if (playerInfo) {
-    
-    const playerPosition = playerInfo.position; 
-    
+    if (playerInfo) {
+      const playerPosition = playerInfo.position;
+      let div;
 
-  } else {
-    console.log(`Player ${playerName} not found in the data.`);
-  }
+      // Check if the selected position is "bench"
+      if (position.value === 'bench') {
+        div = document.getElementById('bench'); // Ensure we target the correct div for bench
+        if (!div) {
+          console.error("No div found for the bench. Make sure the 'bench' div exists in your HTML.");
+          return;
+        }
+      } else {
+        div = document.getElementById(playerPosition); // Target specific position for players
+      }
+
+      // Ensure the player hasn't already been added to the div
+      if (div) {
+        const check = div.querySelector('.cards'); // Check if there's already a card in this div
+
+        if (check !== null) {
+          // If the position is occupied, ask the user whether they want to replace the player
+          const userConfirm = confirm(`The position ${playerPosition} is already occupied by another player. Do you want to replace the player?`);
+
+          if (!userConfirm) {
+            // If user chooses "No", stop the process
+            return;
+          } else {
+            // If user chooses "Yes", remove the existing player
+            div.innerHTML = ''; // Clear the div (remove current player)
+          }
+        }
+
+        // Add the player card to the position (whether it's the bench or another position)
+        div.appendChild(card);
+        addedPlayers.add(playerName); // Track added player
+        card.setAttribute('data-added', 'true'); // Mark card as added
+        console.log(`Player ${playerName} added to ${playerPosition}`);
+      } else {
+        console.log(`Position ${playerPosition} not found in the DOM.`);
+      }
+    } else {
+      console.log(`Player ${playerName} not found in the data.`);
+    }
+  });
 });
-})

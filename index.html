@@ -38,43 +38,13 @@
     <div class="w-full min-h-[100px] bg-black bg-opacity-70 p-24 flex justify-between flex-wrap">
         <div class="w-[60%] bg-[url('../img/stadium.webp')] bg-center bg-no-repeat bg-cover h-screen grid grid-cols-5 grid-rows-4  gap-1 p-4 ">
             <!-- Grid Items -->
-            <div id="LW" class=" bg-opacity-30 border border-white relative bg-[url('img/badge_gold.webp')] bg-center bg-no-repeat bg-cover w-full h-full flex flex-col justify-center items-center">
-              <div class="flex justify-start ">
-                <div class="text-xs text-[#393218]">
-                  <p class="font-extra-bold">90</p>
-                  <p class="font-semibold">cf</p>
-                </div>
-                <div class="text-center text-xs text-[#393218] font-extra-bold">
-                  <img src="https://cdn.sofifa.net/players/158/023/25_120.png" alt="messi" class="w-[70px]">
-                  <p class="text-[9px]">Messi</p>
-                </div>
-              </div>
-              <div class="boxes text-[9px] mt-4 text-[#393218] grid grid-cols-6 grid-rows-2 gap-[1px]  justify-center items-center" >
-                <div>PAC</div>
-                <div>SHO</div>
-                <div>PAS</div>
-                <div>DRI</div>
-                <div>DEF</div>
-                <div>PHY</div>
-                <div class="font-extra-bold">80</div>
-                <div class="font-extra-bold">87</div>
-                <div class="font-extra-bold">90</div>
-                <div class="font-extra-bold">94</div>
-                <div class="font-extra-bold">33</div>
-                <div class="font-extra-bold">64</div>
-              </div>
-              <div class="flages grid grid-cols-2 gap-4 items-center">
-                <img src="https://cdn.sofifa.net/flags/ar.png" alt="" class="w-[10px]">
-                <img src="https://cdn.sofifa.net/meta/team/239235/120.png" alt="" class="w-[10px]">
-              </div>
-              <div class="absolute ">
-                <i class="fa-solid fa-pen text-white bg-red-500 p-2 rounded-full"></i>
-              </div>
+            <div id="LW" class="">
+                            
             </div>
-            <div >
+            <div>
               <img src="img/badge_gold.webp" alt="" class="w-full h-full">
             </div>
-            <div id="ST" class="bg-white bg-opacity-30 border border-white  text-center">3</div>
+            <div id="ST" class="bg-white bg-opacity-30 border border-white  text-center"></div>
             <div >
               <img src="img/badge_ballon_dor.webp" alt="" class="w-full h-full">
             </div>
@@ -149,6 +119,9 @@
         <div class="mt-14 bg-black bg-opacity-30 p-8 w-full min-h-64">
           <h2 class="text-white ">l7tiyat</h2>
           <div id="cards-container" class="grid grid-cols-5 gap-[1px] ">
+              <div id="bench" class="bg-white bg-opacity-30 border border-white text-center">
+  <!-- Bench players will be added here -->
+</div>
 
           </div>
         </div>
@@ -168,6 +141,8 @@
       <label for="positionedit">Player's Position</label>
       <select id="positionedit" class="p-2 text-black rounded-md">
           <option value="" selected disabled>Select Position</option>
+          <option value="bench">Bench</option> 
+
           
       </select>
       <button id="addtofield" type="submit" class="bg-green-500 p-2 mt-4 rounded-full hover:bg-green-600">Add Player</button>
