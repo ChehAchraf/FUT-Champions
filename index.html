@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
       tailwind.config = {
         theme: {
@@ -37,7 +38,7 @@
     <div class="w-full min-h-[100px] bg-black bg-opacity-70 p-24 flex justify-between flex-wrap">
         <div class="w-[60%] bg-[url('../img/stadium.webp')] bg-center bg-no-repeat bg-cover h-screen grid grid-cols-5 grid-rows-4  gap-1 p-4 ">
             <!-- Grid Items -->
-            <div id="LW" class=" bg-opacity-30 border border-white bg-[url('img/badge_gold.webp')] bg-center bg-no-repeat bg-cover w-full h-full flex flex-col justify-center items-center">
+            <div id="LW" class=" bg-opacity-30 border border-white relative bg-[url('img/badge_gold.webp')] bg-center bg-no-repeat bg-cover w-full h-full flex flex-col justify-center items-center">
               <div class="flex justify-start ">
                 <div class="text-xs text-[#393218]">
                   <p class="font-extra-bold">90</p>
@@ -66,29 +67,32 @@
                 <img src="https://cdn.sofifa.net/flags/ar.png" alt="" class="w-[10px]">
                 <img src="https://cdn.sofifa.net/meta/team/239235/120.png" alt="" class="w-[10px]">
               </div>
+              <div class="absolute ">
+                <i class="fa-solid fa-pen text-white bg-red-500 p-2 rounded-full"></i>
+              </div>
             </div>
             <div >
               <img src="img/badge_gold.webp" alt="" class="w-full h-full">
             </div>
-            <div id="st" class="bg-white bg-opacity-30 border border-white  text-center">3</div>
+            <div id="ST" class="bg-white bg-opacity-30 border border-white  text-center">3</div>
             <div >
               <img src="img/badge_ballon_dor.webp" alt="" class="w-full h-full">
             </div>
-            <div id="rw" class="bg-white bg-opacity-30 border border-white  text-center">5</div>
-            <div id="rcm" class="bg-white bg-opacity-30 border border-white  text-center">6</div>
+            <div id="RW" class="bg-white bg-opacity-30 border border-white  text-center">5</div>
+            <div id="RCM" class="bg-white bg-opacity-30 border border-white  text-center">6</div>
             <div class="bg-white bg-opacity-30 border border-white  text-center">7</div>
-            <div id="cm" class="bg-white bg-opacity-30 border border-white  text-center">8</div>
+            <div id="CM" class="bg-white bg-opacity-30 border border-white  text-center">8</div>
             <div class="bg-white bg-opacity-30 border border-white  text-center">
             </div>
-            <div id="rcm" class="bg-white bg-opacity-30 border border-white  text-center">10</div>
-            <div id="lcb" class="bg-white bg-opacity-30 border border-white  text-center">11</div>
+            <div id="RCM" class="bg-white bg-opacity-30 border border-white  text-center">10</div>
+            <div id="LCB" class="bg-white bg-opacity-30 border border-white  text-center">11</div>
             <div class="bg-white bg-opacity-30 border border-white  text-center">12</div>
-            <div id="cb" class="bg-white bg-opacity-30 border border-white  text-center">13</div>
+            <div id="CB" class="bg-white bg-opacity-30 border border-white  text-center">13</div>
             <div class="bg-white bg-opacity-30 border border-white  text-center">14</div>
-            <div id="rcb" class="bg-white bg-opacity-30 border border-white  text-center">15</div>
+            <div id="RCB" class="bg-white bg-opacity-30 border border-white  text-center">15</div>
             <div class="bg-white bg-opacity-30 border border-white  text-center">16</div>
             <div class="bg-white bg-opacity-30 border border-white  text-center">17</div>
-            <div id="gk" class="bg-white bg-opacity-30 border border-white  text-center">18</div>
+            <div id="GK" class="bg-white bg-opacity-30 border border-white  text-center">18</div>
             <div class="bg-white bg-opacity-30 border border-white  text-center">19</div>
             <div class="bg-white bg-opacity-30 border border-white  text-center">20</div>
         </div>
@@ -144,7 +148,7 @@
         </div>
         <div class="mt-14 bg-black bg-opacity-30 p-8 w-full min-h-64">
           <h2 class="text-white ">l7tiyat</h2>
-          <div id="cards-container" class="flex justify-between flex-wrap">
+          <div id="cards-container" class="grid grid-cols-5 gap-[1px] ">
 
           </div>
         </div>
@@ -154,6 +158,25 @@
 <div id="modal" class="fixed top-1/3 text-white hidden left-[100px] z-50 h-[fit-content] flex justify-center  w-1/5 bg-black border border-gray-300 shadow-lg rounded-lg p-4">
 
 </div>
+<!-- Modal Background -->
+<div id="editplayerModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50 ">
+  <!-- Modal Content -->
+  <div id="editplayer" class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+    <form id="createForm" class="flex flex-col space-y-3 w-full text-center">
+      <label for="nameedit">Player's Name</label>
+      <input type="text" id="nameedit" class="p-2 text-black rounded-md" placeholder="Enter player name">
+      <label for="positionedit">Player's Position</label>
+      <select id="positionedit" class="p-2 text-black rounded-md">
+          <option value="" selected disabled>Select Position</option>
+          
+      </select>
+      <button id="addtofield" type="submit" class="bg-green-500 p-2 mt-4 rounded-full hover:bg-green-600">Add Player</button>
+    </form>
+    <!-- Close Modal Button -->
+    <button onclick="document.getElementById('editplayerModal').style.display='none'" id="closeModal" class="absolute top-2 right-2 p-2 text-gray-500 hover:text-gray-800">X</button>
+  </div>
+</div>
+
   <!-- end header  -->
   <script src="js/main.js"></script>
 </body>
