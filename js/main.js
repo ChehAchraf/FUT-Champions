@@ -81,60 +81,79 @@ function add_to_inport(data) {
 }
 
 function fill_field() {
-    let selected_player_name = document.getElementById('importedName').value;
-    
-    if (selected_player_name) {
-        const player_info = data.players.find(function(player) {
-            return player.name === selected_player_name;
-        });
+  let selected_player_name = document.getElementById('importedName').value;
+  
+  if (selected_player_name) {
+      const player_info = data.players.find(function(player) {
+          return player.name === selected_player_name;
+      });
 
-        if (player_info) {
-            position_import.value = player_info.position;
-            shoot_import.value = player_info.shooting;
-            pass_import.value = player_info.passing;
-            driblle_import.value = player_info.dribbling;
-            defonce_import.value = player_info.defending;
-            physique_import.value = player_info.physical;
-            rate_import.value = player_info.rating;
+      if (player_info) {
+          position_import.value = player_info.position;
+          shoot_import.value = player_info.shooting;
+          pass_import.value = player_info.passing;
+          driblle_import.value = player_info.dribbling;
+          defonce_import.value = player_info.defending;
+          physique_import.value = player_info.physical;
+          rate_import.value = player_info.rating;
 
-            let img = player_info.photo;
-            let name = player_info.name;
+          let img = player_info.photo;
+          let name = player_info.name;
 
-            let temp_card = `
-              <div class="bg-[url('img/badge_gold.webp')] bg-center bg-no-repeat bg-cover w-1/5 h-[220px] flex flex-col justify-center items-center">
-                <div class="flex justify-start">
-                  <div class="text-xs text-[#393218]">
-                    <p class="font-extra-bold">${player_info.rating}</p>
-                    <p class="font-semibold">${player_info.position}</p>
-                  </div>
-                  <div class="text-center text-xs text-[#393218] font-extra-bold">
-                    <img src="${img}" alt="${name}" class="w-[70px]">
-                    <p class="text-[9px]">${name}</p>
-                  </div>
+          let temp_card = `
+            <div class="player-card bg-[url('img/badge_gold.webp')] w-1/5 h-[220px] flex flex-col justify-center items-center" data-name="${name}">
+              <div class="flex justify-start">
+                <div class="text-xs text-[#393218]">
+                  <p class="font-extra-bold">${player_info.rating}</p>
+                  <p class="font-semibold">${player_info.position}</p>
                 </div>
-                <div class="boxes text-[9px] mt-4 text-[#393218] grid grid-cols-6 grid-rows-2 gap-[1px] justify-center items-center">
-                  <div>PAC</div><div>SHO</div><div>PAS</div><div>DRI</div><div>DEF</div><div>PHY</div>
-                  <div class="font-extra-bold">${player_info.pace}</div>
-                  <div class="font-extra-bold">${player_info.shooting}</div>
-                  <div class="font-extra-bold">${player_info.passing}</div>
-                  <div class="font-extra-bold">${player_info.dribbling}</div>
-                  <div class="font-extra-bold">${player_info.defending}</div>
-                  <div class="font-extra-bold">${player_info.physical}</div>
+                <div class="text-center text-xs text-[#393218] font-extra-bold">
+                  <img src="${img}" alt="${name}" class="w-[70px]">
+                  <p class="text-[9px]">${name}</p>
                 </div>
-                <div class="flages grid grid-cols-2 gap-4 items-center">
-                  <img src="https://cdn.sofifa.net/flags/ar.png" alt="" class="w-[10px]">
-                  <img src="https://cdn.sofifa.net/meta/team/239235/120.png" alt="" class="w-[10px]">
-                </div>
-              </div>`;
-              document.getElementById('modal').innerHTML = temp_card;
-            
-            document.getElementById('btn_import').onclick = function() {
-                document.getElementById('cards-container').innerHTML += temp_card; 
-                document.getElementById('modal').style.display = "none";
-            }
-        } else {
-            console.log('Player not found');
-        }
-    }
+              </div>
+              <div class="boxes text-[9px] mt-4 text-[#393218] grid grid-cols-6 grid-rows-2 gap-[1px] justify-center items-center">
+                <div>PAC</div><div>SHO</div><div>PAS</div><div>DRI</div><div>DEF</div><div>PHY</div>
+                <div class="font-extra-bold">${player_info.pace}</div>
+                <div class="font-extra-bold">${player_info.shooting}</div>
+                <div class="font-extra-bold">${player_info.passing}</div>
+                <div class="font-extra-bold">${player_info.dribbling}</div>
+                <div class="font-extra-bold">${player_info.defending}</div>
+                <div class="font-extra-bold">${player_info.physical}</div>
+              </div>
+              <div class="flages grid grid-cols-2 gap-4 items-center">
+                <img src="https://cdn.sofifa.net/flags/ar.png" alt="" class="w-[10px]">
+                <img src="https://cdn.sofifa.net/meta/team/239235/120.png" alt="" class="w-[10px]">
+              </div>
+            </div>`;
+          document.getElementById('modal').innerHTML = temp_card
+          document.getElementById('btn_import').addEventListener('click',function(e){
+            e.preventDefault();
+            if (isplayerinlist(name)) {
+              alert('This player is already in the list.');
+              return;
+          }
+          
+            document.getElementById('cards-container').innerHTML += temp_card;
+          })
+          document.getElementById('modal').style.display = "none";
+      } else {
+          console.log('Player not found');
+      }
+  }
 }
+
+
+function isplayerinlist(playerName) {
+  let existingPlayers = document.querySelectorAll('#cards-container .player-card');
+  for (let playerCard of existingPlayers) {
+      let cardName = playerCard.getAttribute('data-name');
+      if (cardName === playerName) {
+          return true; 
+      }
+  }
+  return false;
+}
+
+
 
