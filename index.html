@@ -36,7 +36,7 @@
   <!-- start header  -->
   <div class="min-h-screen bg-[url('../img/leader.jpg')] bg-top bg-cover bg-no-repeat ">
     <div class="w-full min-h-[100px] bg-black bg-opacity-70 p-24 flex justify-between flex-wrap">
-      <section class="w-[65%] bg-[url('img/stadium.webp')] h-[100vh] w-[56rem] bg-no-repeat ml-10 mt-6">
+      <section class="w-[65%] bg-[url('img/stadium.webp')] h-[100vh] w-[56rem] bg-no-repeat ml-10 mt-6 bg-opacity-50">
     
         <!-- attackers -->
         <div id="attackers" class="flex items-start justify-center gap-14">
@@ -94,10 +94,18 @@
     
       </section>
 
-        <div id="create_form" class="bg-cyan-500 bg-opacity-50 w-[30%] rounded-lg ">
+        <div id="create_form" class="bg-black bg-opacity-30 w-[30%] rounded-lg pb-8">
           <form id="createForm" class="flex flex-col space-y-3 w-3/4 text-center mt-8 m-auto">
             <label class="text-white" for="name">Player's Name</label>
             <input type="text" id="name" class="p-2 text-black rounded-md" placeholder="Enter player name">
+            <label for="profile">Players image</label>
+            <input class="p-2 rounded-lg" type="url" placeholder="Enter profile img" name="profile" id="profile">
+            <label for="flag">Players Flag</label>
+            <input class="p-2 rounded-lg" type="url" placeholder="Enter flag img" name="flag" id="flag">
+            <label for="profile">Players logo</label>
+            <input class="p-2 rounded-lg" type="url" placeholder="Enter logo img" name="logo" id="logo">
+            <label for="profile">Players club</label>
+            <input class="p-2 rounded-lg" type="text" placeholder="Enter players club" name="club" id="club">
             <label class="text-white" for="position">Player's Position</label>
             <select id="position" class="p-2 text-black rounded-md">
               <option value="" disabled selected>Select a player</option>
@@ -122,12 +130,18 @@
               <input type="number" id="dribble" class="p-2 text-black rounded-md" placeholder="DRIBBLE">
               <input type="number" id="defence" class="p-2 text-black rounded-md" placeholder="DEFENCE">
               <input type="number" id="physique" class="p-2 text-black rounded-md" placeholder="PHYSIQUE">
+              <input  type="number" id="rate" class="p-2 text-black rounded-md start-col-1 end-col-2" placeholder="Rate">
             </div>
             <button id="create" class="bg-green-500 p-2 mt-4 rounded-full hover:bg-green-600">Add Player</button>
           </form>
         </div>
+        <div id="bench" class="w-[65%] bg-black p-16 rounded-lg bg-opacity-30 grid-cols-4 gap-4">
+
+        </div>
     </div>
   </div>
+  
+  
 
   <div id="filtredplayermodal" class="fixed inset-0 hidden justify-center items-center bg-black bg-opacity-45">
     
