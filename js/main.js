@@ -1,293 +1,330 @@
-let createForm = document.getElementById('createForm');
-let player_name = document.getElementById('name');
-let position = document.getElementById('position');
-let pac = document.getElementById('pac');
-let shoot = document.getElementById('shoot');
-let pass = document.getElementById('pass');
-let driblle = document.getElementById('dribble'); // Fixed typo: driblle -> dribble
-let defonce = document.getElementById('defonce');
-let physique = document.getElementById('physique');
-let position_import = document.getElementById('positionImport');
-let pac_import = document.getElementById('pacImport');
-let shoot_import = document.getElementById('shootImport');
-let pass_import = document.getElementById('passImport');
-let dribble_import = document.getElementById('dribbleImport'); // Fixed typo here too
-let defonce_import = document.getElementById('defenceImport');
-let physique_import = document.getElementById('physiqueImport');
-let rate_import = document.getElementById('rateimport');
-let allcards = [];
-let editbtn = [];
-const createTab = document.getElementById('createTab');
-const importTab = document.getElementById('importTab');
-const createPlayer = document.getElementById('createPlayer');
-const importPlayers = document.getElementById('importPlayers');
-
-// Tab switching between Create Player and Import Players tabs
-createTab.addEventListener('click', () => {
-  createTab.classList.add('bg-white', 'text-cyan-900');
-  createTab.classList.remove('text-gray-300');
-  importTab.classList.remove('bg-white', 'text-cyan-900');
-  importTab.classList.add('text-gray-300');
-  createPlayer.classList.remove('hidden');
-  importPlayers.classList.add('hidden');
-});
-
-importTab.addEventListener('click', () => {
-  importTab.classList.add('bg-white', 'text-cyan-900');
-  importTab.classList.remove('text-gray-300');
-  createTab.classList.remove('bg-white', 'text-cyan-900');
-  createTab.classList.add('text-gray-300');
-  createPlayer.classList.add('hidden');
-  importPlayers.classList.remove('hidden');
-});
-
-// Fetch data from JSON
-get_from_json();
-
-// Form validation for the Create Player form
-createForm.addEventListener('submit', function(e) {
+let addedToSquadArr = [];
+let notAddTosquad = [];
+let createdPlayer = [];
+let playersdata = new XMLHttpRequest();
+playersdata.open("GET", "https://brofortech.com/players.json", true);
+playersdata.send();
+document.getElementById('create').addEventListener('click', function(e) {
   e.preventDefault();
-  if (player_name.value.trim() == '' || position.value.trim() == '' || pac.value.trim() == '' || defonce.value.trim() == '' || shoot.value.trim() == '' || dribble.value.trim() == '' || physique.value.trim() == '') {
-    console.log('Please fill in all fields');
+    let name = document.getElementById('name');
+  let position = document.getElementById('position');
+  let pac = document.getElementById('pac');
+  let shoot = document.getElementById('shoot');
+  let pass = document.getElementById('pass');
+  let dribble = document.getElementById('dribble');
+  let defence = document.getElementById('defence');
+  let physique = document.getElementById('physique');
+    let nameRegex = /^[A-Za-z\s]+$/;
+    let statRegex = /^[1-9][0-9]?$|^100$/;  
+  let obj = {
+    id: createdPlayer.length,
+    name: name.value,
+    position: position.value,
+    pac: pac.value,
+    shoot: shoot.value,
+    pass: pass.value,
+    dribble: dribble.value,
+    defence: defence.value,
+    physique: physique.value
+  };
+  if (!name.value || !nameRegex.test(name.value)) {
+      document.getElementById('warningmodal').style.display = "flex"
+      document.getElementById('errormsg').innerText = "Add Only letters"
     return;
   }
-  console.log('Player data is valid');
-});
-
-// Event listener for the import player dropdown
-document.getElementById('importedName').addEventListener('change', function() {
-  fill_field();
-  document.getElementById('modal').style.display = 'flex';
-});
-
-// Event listener for the import form submit action
-document.getElementById('importForm').addEventListener('submit',function(e) {
-  e.preventDefault();
-  fill_field();
-});
-
-// Function to fetch player data from an external JSON
-function get_from_json() {
-  let conn = new XMLHttpRequest();
-  conn.open('GET', 'https://achraf.brofortech.com/pl.json', true);
-  conn.send();
-  conn.onreadystatechange = function() {
-    if (conn.readyState == 4 && conn.status == 200) {
-      data = JSON.parse(conn.responseText);
-      add_to_import(data);
-      addBenchOption();
-    }
-  };
-}
-
-// Add players to the import dropdown
-function add_to_import(data) {
-  data.players.forEach(function(player) {
-    let option = document.createElement('option');
-    option.value = player.name;
-    option.textContent = player.name;
-    document.getElementById('importedName').appendChild(option);
-  });
-}
-
-// Fill form fields with imported player data
-function fill_field() {
-  let selected_player_name = document.getElementById('importedName').value;
-  
-  if (selected_player_name) {
-    const player_info = data.players.find(function(player) {
-      return player.name === selected_player_name;
-    });
-
-    if (player_info) {
-      if (isPlayerInList(player_info.name)) {
-        console.log('Player is already in the list');
-        return;
-      }
-
-      // Update the fields with imported player data
-      position_import.value = player_info.position;
-      shoot_import.value = player_info.shooting;
-      pass_import.value = player_info.passing;
-      dribble_import.value = player_info.dribbling;
-      defonce_import.value = player_info.defending;
-      physique_import.value = player_info.physical;
-      rate_import.value = player_info.rating;
-
-      let img = player_info.photo;
-      let name = player_info.name;
-
-      // Generate the HTML card for the player
-      let temp_card = `
-        <div class="cards bg-[url('img/badge_gold.webp')] bg-center bg-no-repeat bg-cover w-auto h-full flex flex-col justify-center items-center" data-id="${player_info.name}">
-          <div class="flex justify-start">
-            <div class="text-xs text-[#393218]">
-              <p class="font-extra-bold">${player_info.rating}</p>
-              <p class="font-semibold">${player_info.position}</p>
-            </div>
-            <div class="text-center text-xs text-[#393218] font-extra-bold">
-              <img src="${img}" alt="${name}" class="w-[70px]">
-              <p class="name text-[9px]">${name}</p>
-            </div>
-          </div>
-          <div class="boxes text-[9px] mt-4 text-[#393218] grid grid-cols-6 grid-rows-2 gap-[1px] justify-center items-center">
-            <div>PAC</div><div>SHO</div><div>PAS</div><div>DRI</div><div>DEF</div><div>PHY</div>
-            <div class="font-extra-bold">${player_info.pace}</div>
-            <div class="font-extra-bold">${player_info.shooting}</div>
-            <div class="font-extra-bold">${player_info.passing}</div>
-            <div class="font-extra-bold">${player_info.dribbling}</div>
-            <div class="font-extra-bold">${player_info.defending}</div>
-            <div class="font-extra-bold">${player_info.physical}</div>
-          </div>
-          <div class="flages grid grid-cols-2 gap-4 items-center">
-            <img src="https://cdn.sofifa.net/flags/ar.png" alt="" class="w-[10px]">
-            <img src="https://cdn.sofifa.net/meta/team/239235/120.png" alt="" class="w-[10px]">
-          </div>
-          <div id="edit" class="edit absolute hidden cursor-pointer">
-              <i class="fa-solid fa-pen text-white bg-red-500 p-2 rounded-full"></i>
-          </div>
-        </div>
-      `;
-
-      document.getElementById('modal').innerHTML = ''; 
-      document.getElementById('modal').insertAdjacentHTML('beforeend', temp_card);
-      
-      allcards = document.querySelectorAll('.cards');
-      editbtn = document.querySelectorAll('.edit');
-      
-      show_icon();
-      edit_modal(name);
-
-      // Add the player card when import button is clicked
-      document.getElementById('btn_import').addEventListener('click', function() {
-        document.getElementById('cards-container').innerHTML += temp_card;
-        document.getElementById('modal').style.display = "none";
-        allcards = document.querySelectorAll('.cards');
-        editbtn = document.querySelectorAll('.edit');
-        show_icon();
-        edit_modal(name);
-      }, {once: true});
-    } else {
-      console.log('Player not found');
-    }
+  if (!position.value) {
+    document.getElementById('warningmodal').style.display = "flex"
+    document.getElementById('errormsg').innerText = "Please select a player position"
+    return;
   }
-}
-
-// Check if the player is already in the list
-function isPlayerInList(playerName) {
-  return Array.from(allcards).some(card => card.getAttribute('data-id') === playerName);
-}
-
-// Show edit icon on hover over player card
-function show_icon() {
-  allcards.forEach(card => {
-    let editIcon = card.querySelector('.edit');
-    
-    card.addEventListener('mouseenter', function() {
-      editIcon.style.display = "flex";
-    });
-
-    card.addEventListener('mouseleave', function() {
-      editIcon.style.display = "none";
-    });
-  });
-}
-
-// Open edit modal when edit icon is clicked
-function edit_modal(name) {
-  editbtn.forEach(btn => {
-    btn.addEventListener('click', function () {
-      document.getElementById('editplayerModal').style.display = "flex";
-      allcards.forEach(card => {
-        if (card.getAttribute('data-id') === name) {
-          document.getElementById("nameedit").value = name;
-        }
-      });
-    });
+  if (!statRegex.test(pac.value) || !statRegex.test(shoot.value) || !statRegex.test(pass.value) || 
+      !statRegex.test(dribble.value) || !statRegex.test(defence.value) || !statRegex.test(physique.value)) {
+    document.getElementById('warningmodal').style.display = "flex"
+    document.getElementById('errormsg').innerText = "Please enter valid stats (numbers between 1 and 100)."
+    return;
+  }
+  createdPlayer.push(obj);
+  console.log(createdPlayer);
   });
 
-  allcards.forEach(card => {
-    card.addEventListener('click', function () {
-      const playerName = card.getAttribute('data-id');
-      const player_info = data.players.find(player => player.name === playerName);
+playersdata.onreadystatechange = function () {
+  if (playersdata.readyState === 4 && playersdata.status === 200) {
+    let ourdata = JSON.parse(playersdata.response);
+    let data = ourdata.players;
 
-      if (player_info) {
-        const positionSelect = document.getElementById('positionedit');
-        positionSelect.innerHTML = '';
-        const option = document.createElement('option');
-        option.value = player_info.position;
-        option.textContent = player_info.position;
-        positionSelect.appendChild(option);   
-        let benchOption = document.createElement('option');
-        benchOption.value = 'bench';
-        benchOption.textContent = 'Bench';
-        positionSelect.appendChild(benchOption);
-        console.log('Player position selected: ', player_info.position);
-      }
-    });
-  });
-}
+    function addFiltreplayerToPosition(positionFilter) {
+      const filteredPlayers = data.filter(player => player.position === positionFilter);
+      const playerstoadd = document.getElementById("playerstoadd");
+      playerstoadd.innerHTML = '';
 
-// Add "bench" option to position select dropdown
-function addBenchOption() {
-  let positionSelect = document.getElementById('positionedit');
-  let benchOption = document.createElement('option');
-  benchOption.value = 'bench';
-  benchOption.textContent = 'Bench';
-  positionSelect.appendChild(benchOption); // Add "bench" to the position options
-}
-
-// Handle adding players to the field (or bench)
-document.getElementById('addtofield').addEventListener('click', function(e) {
-  e.preventDefault();
-  let addedPlayers = new Set(); // Track added players to avoid duplicates
-
-  allcards.forEach((card) => {
-    const playerName = card.getAttribute('data-id');
-    const playerInfo = data.players.find(player => player.name === playerName);
-
-    if (playerInfo) {
-      const playerPosition = playerInfo.position;
-      let div;
-
-      // Check if the selected position is "bench"
-      if (position.value === 'bench') {
-        div = document.getElementById('bench'); // Ensure we target the correct div for bench
-        if (!div) {
-          console.error("No div found for the bench. Make sure the 'bench' div exists in your HTML.");
-          return;
-        }
-      } else {
-        div = document.getElementById(playerPosition); // Target specific position for players
-      }
-
-      // Ensure the player hasn't already been added to the div
-      if (div) {
-        const check = div.querySelector('.cards'); // Check if there's already a card in this div
-
-        if (check !== null) {
-          // If the position is occupied, ask the user whether they want to replace the player
-          const userConfirm = confirm(`The position ${playerPosition} is already occupied by another player. Do you want to replace the player?`);
-
-          if (!userConfirm) {
-            // If user chooses "No", stop the process
-            return;
-          } else {
-            // If user chooses "Yes", remove the existing player
-            div.innerHTML = ''; // Clear the div (remove current player)
-          }
-        }
-
-        // Add the player card to the position (whether it's the bench or another position)
-        div.appendChild(card);
-        addedPlayers.add(playerName); // Track added player
-        card.setAttribute('data-added', 'true'); // Mark card as added
-        console.log(`Player ${playerName} added to ${playerPosition}`);
-      } else {
-        console.log(`Position ${playerPosition} not found in the DOM.`);
-      }
-    } else {
-      console.log(`Player ${playerName} not found in the data.`);
+      filteredPlayers.forEach(player => {
+        let div = document.createElement("div")
+        div.setAttribute("class", "cursor-pointer bg-goldcard bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center")
+        if(positionFilter !== "GK"){
+        div.innerHTML = `
+          <div class="flex">
+            <div class="flex flex-col mr-[-8px] text-[#362f16] items-center">
+              <span class="mb-[-5px] font-bold">${player.rating}</span>
+              <span class="text-[10px] font-medium">${player.position}</span>
+            </div>
+            <img class="w-20" src="${player.photo}" alt="${player.name}">
+          </div>
+          <p class="font-Raleway text-[11px] font-bold text-[#362f16] mb-[-4px]">${player.name}</p>
+          <div class="text-[#362f16] gap-1 flex">
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">PAC</span>
+              <span class="font-bold text-[10px]">${player.pace}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">SHO</span>
+              <span class="font-bold text-[10px]">${player.shooting}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">PAS</span>
+              <span class="font-bold text-[10px]">${player.passing}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">DRI</span>
+              <span class="font-bold text-[10px]">${player.dribbling}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">DEF</span>
+              <span class="font-bold text-[10px]">${player.defending}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">PHY</span>
+              <span class="font-bold text-[10px]">${player.physical}</span>
+            </div>
+          </div>
+          <div class="flex justify-center items-center w-3 gap-2">
+            <img src="${player.flag}" alt="${player.name}">
+            <img src="${player.logo}" alt="${player.club}">
+          </div>
+        `
+    }else{
+        div.innerHTML = `
+          <div class="flex">
+            <div class="flex flex-col mr-[-8px] text-[#362f16] items-center">
+              <span class="mb-[-5px] font-bold">${player.rating}</span>
+              <span class="text-[10px] font-medium">${player.position}</span>
+            </div>
+            <img class="w-20" src="${player.photo}" alt="${player.name}">
+          </div>
+          <p class="font-Raleway text-[11px] font-bold text-[#362f16] mb-[-4px]">${player.name}</p>
+          <div class="text-[#362f16] gap-1 flex">
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">DIV</span>
+              <span class="font-bold text-[10px]">${player.diving}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">HAN</span>
+              <span class="font-bold text-[10px]">${player.handling}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">KIC</span>
+              <span class="font-bold text-[10px]">${player.kicking}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">REF</span>
+              <span class="font-bold text-[10px]">${player.reflexes}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">SPE</span>
+              <span class="font-bold text-[10px]">${player.speed}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">POS</span>
+              <span class="font-bold text-[10px]">${player.positioning}</span>
+            </div>
+          </div>
+          <div class="flex justify-center items-center w-3 gap-2">
+            <img src="${player.flag}" alt="${player.name}">
+            <img src="${player.logo}" alt="${player.club}">
+          </div>
+        `
     }
-  });
-});
+    
+    div.addEventListener('click', function () {
+        let positionElement = document.querySelector(`[player-position="${player.position}"]`);
+        positionElement.classList.remove("bg-blackcard")
+        positionElement.classList.add("bg-goldcard")
+
+
+
+        
+        
+
+        if(positionFilter !== "GK"){
+          positionElement.innerHTML = `
+            <div class="flex">
+              <div class="flex flex-col mr-[-8px] text-[#362f16] items-center">
+                <span class="mb-[-5px] font-bold">${player.rating}</span>
+                <span class="text-[10px] font-medium">${player.position}</span>
+              </div>
+              <img class="w-20" src="${player.photo}" alt="${player.name}">
+            </div>
+            <p class="font-Raleway text-[11px] font-bold text-[#362f16] mb-[-4px]">${player.name}</p>
+            <div class="text-[#362f16] gap-1 flex">
+              <div class="flex flex-col gap-0 justify-center items-center">
+                <span class=" text-[7px] font-medium mb-[-4px]">PAC</span>
+                <span class="font-bold text-[10px]">${player.pace}</span>
+              </div>
+              <div class="flex flex-col gap-0 justify-center items-center">
+                <span class=" text-[7px] font-medium mb-[-4px]">SHO</span>
+                <span class="font-bold text-[10px]">${player.shooting}</span>
+              </div>
+              <div class="flex flex-col gap-0 justify-center items-center">
+                <span class=" text-[7px] font-medium mb-[-4px]">PAS</span>
+                <span class="font-bold text-[10px]">${player.passing}</span>
+              </div>
+              <div class="flex flex-col gap-0 justify-center items-center">
+                <span class=" text-[7px] font-medium mb-[-4px]">DRI</span>
+                <span class="font-bold text-[10px]">${player.dribbling}</span>
+              </div>
+              <div class="flex flex-col gap-0 justify-center items-center">
+                <span class=" text-[7px] font-medium mb-[-4px]">DEF</span>
+                <span class="font-bold text-[10px]">${player.defending}</span>
+              </div>
+              <div class="flex flex-col gap-0 justify-center items-center">
+                <span class=" text-[7px] font-medium mb-[-4px]">PHY</span>
+                <span class="font-bold text-[10px]">${player.physical}</span>
+              </div>
+            </div>
+            <div class="flex justify-center items-center w-3 gap-2">
+              <img src="${player.flag}" alt="${player.name}">
+              <img src="${player.logo}" alt="${player.club}">
+            </div>
+          `;
+        }else{
+            positionElement.innerHTML = `
+          <div class="flex">
+            <div class="flex flex-col mr-[-8px] text-[#362f16] items-center">
+              <span class="mb-[-5px] font-bold">${player.rating}</span>
+              <span class="text-[10px] font-medium">${player.position}</span>
+            </div>
+            <img class="w-20" src="${player.photo}" alt="${player.name}">
+          </div>
+          <p class="font-Raleway text-[11px] font-bold text-[#362f16] mb-[-4px]">${player.name}</p>
+          <div class="text-[#362f16] gap-1 flex">
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">DIV</span>
+              <span class="font-bold text-[10px]">${player.diving}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">HAN</span>
+              <span class="font-bold text-[10px]">${player.handling}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">KIC</span>
+              <span class="font-bold text-[10px]">${player.kicking}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">REF</span>
+              <span class="font-bold text-[10px]">${player.reflexes}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">SPE</span>
+              <span class="font-bold text-[10px]">${player.speed}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class=" text-[7px] font-medium mb-[-4px]">POS</span>
+              <span class="font-bold text-[10px]">${player.positioning}</span>
+            </div>
+          </div>
+          <div class="flex justify-center items-center w-3 gap-2">
+            <img src="${player.flag}" alt="${player.name}">
+            <img src="${player.logo}" alt="${player.club}">
+          </div>`
+        
+        }
+
+        
+
+        let img = document.createElement("img")
+        img.setAttribute("class","w-5 bg-red-500 rounded-full  hover:scale-110 relative bottom-[150px] left-[45px] hidden")
+        img.setAttribute("src","/img/delete.svg");
+        img.setAttribute("alt","deleteico")
+
+        
+        positionElement.addEventListener("mouseover",function(){
+            img.classList.remove("hidden")
+            img.classList.add("block")
+        })
+        positionElement.addEventListener("mouseleave",function(){
+            img.classList.remove("block")
+            img.classList.add("hidden")
+        })
+        
+
+        img.addEventListener("click",function(event){
+
+          event.stopPropagation();
+
+          const playerIndex = addedToSquadArr.findIndex(play => play.name === player.name);
+          
+          
+              addedToSquadArr.splice(playerIndex, 1);
+              document.getElementById("filtredplayermodal").classList.add("hidden");
+              document.getElementById("filtredplayermodal").classList.remove("flex");
+          
+
+            positionElement.innerHTML = "";
+            let addImg = document.createElement('img');
+            
+            addImg.setAttribute("class","mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-500");
+            addImg.setAttribute("src","/img/add.svg")
+
+            positionElement.appendChild(addImg);
+
+            positionElement.classList.add("bg-blackcard")
+            positionElement.classList.remove("bg-goldcard")
+
+            document.getElementById("filtredplayermodal").classList.add("hidden");
+            document.getElementById("filtredplayermodal").classList.remove("flex");
+            
+        })
+        
+        positionElement.appendChild(img)
+        
+        // add players added to squad to an array
+        function updateSquadPlayers(){
+        addedToSquadArr.push(player)
+        console.log(addedToSquadArr)
+      }
+      //player not added (le reste)
+      function noChoosenPlayers(){
+        
+      }
+
+        document.getElementById("filtredplayermodal").classList.add("hidden");
+        document.getElementById("filtredplayermodal").classList.remove("flex");
+      });
+  
+      
+      playerstoadd.appendChild(div);
+    
+    });
+  }
+
+    
+    document.querySelectorAll('.position-button').forEach(button => {
+      button.addEventListener('click', function () {
+        const position = button.getAttribute('player-position');
+        addFiltreplayerToPosition(position);
+        
+        document.getElementById("filtredplayermodal").classList.add("flex");
+        document.getElementById("filtredplayermodal").classList.remove("hidden");
+
+      })
+    })
+    document.querySelectorAll(".substitution").forEach(button => {
+      button.addEventListener("click",function(){
+        
+        
+        document.getElementById("filtredplayermodal").classList.add("flex");
+        document.getElementById("filtredplayermodal").classList.remove("hidden");
+      })
+    })
+    
+  }
+};

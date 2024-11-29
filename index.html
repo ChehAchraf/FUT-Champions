@@ -36,121 +36,141 @@
   <!-- start header  -->
   <div class="min-h-screen bg-[url('../img/leader.jpg')] bg-top bg-cover bg-no-repeat ">
     <div class="w-full min-h-[100px] bg-black bg-opacity-70 p-24 flex justify-between flex-wrap">
-        <div class="w-[60%] bg-[url('../img/stadium.webp')] bg-center bg-no-repeat bg-cover h-screen grid grid-cols-5 grid-rows-4  gap-1 p-4 ">
-            <!-- Grid Items -->
-            <div id="LW" class="">
-                            
+      <section class="w-[65%] bg-[url('img/stadium.webp')] h-[100vh] w-[56rem] bg-no-repeat ml-10 mt-6">
+    
+        <!-- attackers -->
+        <div id="attackers" class="flex items-start justify-center gap-14">
+            <div id="LW" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button selected-position" player-position="LW">
+              
+                <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700" alt="add">
             </div>
-            <div>
-              <img src="img/badge_gold.webp" alt="" class="w-full h-full">
-            </div>
-            <div id="ST" class="bg-white bg-opacity-30 border border-white  text-center"></div>
-            <div >
-              <img src="img/badge_ballon_dor.webp" alt="" class="w-full h-full">
-            </div>
-            <div id="RW" class="bg-white bg-opacity-30 border border-white  text-center">5</div>
-            <div id="RCM" class="bg-white bg-opacity-30 border border-white  text-center">6</div>
-            <div class="bg-white bg-opacity-30 border border-white  text-center">7</div>
-            <div id="CM" class="bg-white bg-opacity-30 border border-white  text-center">8</div>
-            <div class="bg-white bg-opacity-30 border border-white  text-center">
-            </div>
-            <div id="RCM" class="bg-white bg-opacity-30 border border-white  text-center">10</div>
-            <div id="LCB" class="bg-white bg-opacity-30 border border-white  text-center">11</div>
-            <div class="bg-white bg-opacity-30 border border-white  text-center">12</div>
-            <div id="CB" class="bg-white bg-opacity-30 border border-white  text-center">13</div>
-            <div class="bg-white bg-opacity-30 border border-white  text-center">14</div>
-            <div id="RCB" class="bg-white bg-opacity-30 border border-white  text-center">15</div>
-            <div class="bg-white bg-opacity-30 border border-white  text-center">16</div>
-            <div class="bg-white bg-opacity-30 border border-white  text-center">17</div>
-            <div id="GK" class="bg-white bg-opacity-30 border border-white  text-center">18</div>
-            <div class="bg-white bg-opacity-30 border border-white  text-center">19</div>
-            <div class="bg-white bg-opacity-30 border border-white  text-center">20</div>
-        </div>
-        <div class="w-[40%] flex flex-col items-center text-white bg-cyan-900 bg-opacity-30 rounded-lg py-8 shadow-lg">
-          <!-- Tabs -->
-          <div class="flex w-full justify-around mb-6 border-b-2 border-gray-400">
-            <button id="createTab" class="py-2 px-4 text-lg font-semibold text-cyan-900 bg-white rounded-t-lg focus:outline-none">Create Player</button>
-            <button id="importTab" class="py-2 px-4 text-lg font-semibold text-gray-300 hover:text-cyan-900 focus:outline-none">Import Players</button>
-          </div>
-        
-          <div id="createPlayer" class="w-full flex flex-col items-center">
-            <form id="createForm" class="flex flex-col space-y-3 w-3/4 text-center">
-              <label for="name">Player's Name</label>
-              <input type="text" id="name" class="p-2 text-black rounded-md" placeholder="Enter player name">
-              <label for="position">Player's Position</label>
-              <input type="text" id="position" class="p-2 text-black rounded-md" placeholder="Enter player position">
-              <label for="stats">Player's Stats</label>
-              <div class="grid grid-cols-2 gap-2">
-                <input type="number" id="pac" class="p-2 text-black rounded-md" placeholder="PAC">
-                <input type="number" id="shoot" class="p-2 text-black rounded-md" placeholder="SHOOT">
-                <input type="number" id="pass" class="p-2 text-black rounded-md" placeholder="PASS">
-                <input type="number" id="dribble" class="p-2 text-black rounded-md" placeholder="DRIBBLE">
-                <input type="number" id="defence" class="p-2 text-black rounded-md" placeholder="DEFENCE">
-                <input type="number" id="physique" class="p-2 text-black rounded-md" placeholder="PHYSIQUE">
-              </div>
-              <button class="bg-green-500 p-2 mt-4 rounded-full hover:bg-green-600">Add Player</button>
-            </form>
-          </div>
-        
-          <div id="importPlayers" class="hidden w-full flex flex-col items-center">
-            <form id="importForm" class="flex flex-col space-y-3 w-3/4 text-center">
-              <label for="importedName">Player's Name</label>
-              <select id="importedName" class="p-2 text-black rounded-md">
-                <option value="" disabled selected>Select a player</option>
-              </select>
-              <label for="position">Player's Position</label>
-              <input type="text" id="positionImport" class="p-2 text-black rounded-md" placeholder="Enter player position">
-              <label for="rateimport">Player's Rate</label>
-              <input type="number" id="rateimport" class="p-2 text-black rounded-md" placeholder="Enter player position">
-              <label for="stats">Player's Stats</label>
-              <div class="grid grid-cols-2 gap-2">
-                <input type="number" id="pacImport" class="p-2 text-black rounded-md" placeholder="PAC">
-                <input type="number" id="shootImport" class="p-2 text-black rounded-md" placeholder="SHOOT">
-                <input type="number" id="passImport" class="p-2 text-black rounded-md" placeholder="PASS">
-                <input type="number" id="dribbleImport" class="p-2 text-black rounded-md" placeholder="DRIBBLE">
-                <input type="number" id="defenceImport" class="p-2 text-black rounded-md" placeholder="DEFENCE">
-                <input type="number" id="physiqueImport" class="p-2 text-black rounded-md" placeholder="PHYSIQUE">
-              </div>
-              <button id="btn_import" class="bg-blue-500 p-2 mt-4 rounded-full hover:bg-blue-600">Add Imported Player</button>
-            </form>
             
+            <div id="ST" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button selected-position" player-position="ST">
+              
+                <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700" alt="add">
+              
+            </div>
+            <div id="RW" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button selected-position" player-position="RW">
+                
+                <img src="/img/add.svg" class=" mt-9 w80 cursor-pointer bgblack0 rounded-full hover:bgredn-700" alt="add">
+    
+            </div>
           </div>
+        <!-- medfilders -->
+        <div class="flex items-center justify-center gap-14">
+            <div id="LCM" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button selected-position" player-position = "LCM">
+                <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700"  alt="add">
+                
+            </div>
+            <div id="CM" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button selected-position" player-position = "CM">
+                <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700"  alt="add">
+            </div>
+            <div id="RCM" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button selected-position" player-position = "RCM">
+                <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700"  alt="add">
+            </div>
         </div>
-        <div class="mt-14 bg-black bg-opacity-30 p-8 w-full min-h-64">
-          <h2 class="text-white ">l7tiyat</h2>
-          <div id="cards-container" class="grid grid-cols-5 gap-[1px] ">
-              <div id="bench" class="bg-white bg-opacity-30 border border-white text-center">
-  <!-- Bench players will be added here -->
-</div>
+        <!-- defenderse -->
+        <div class="flex items-center justify-center gap-14">
+            <div id="LB" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button" player-position = "LB">
+                <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700"  alt="add">
+            </div>
+            <div id="LCB" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button" player-position = "LCB">
+                <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700"  alt="add">
+            </div>
+            <div id="RCB" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button" player-position = "RCB">
+                <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700"  alt="add">
+            </div>
+            <div id="RB" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button" player-position = "RB">
+                <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700"  alt="add">
+            </div>
+        </div>
+        <!-- goalkeeper -->
+        <div class="flex items-center justify-center gap-14">
+            <div class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button" player-position = "GK">
+                <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700"  alt="add">
+            </div>
+        </div>
+    
+    
+      </section>
 
-          </div>
+        <div id="create_form" class="bg-cyan-500 bg-opacity-50 w-[30%] rounded-lg ">
+          <form id="createForm" class="flex flex-col space-y-3 w-3/4 text-center mt-8 m-auto">
+            <label class="text-white" for="name">Player's Name</label>
+            <input type="text" id="name" class="p-2 text-black rounded-md" placeholder="Enter player name">
+            <label class="text-white" for="position">Player's Position</label>
+            <select id="position" class="p-2 text-black rounded-md">
+              <option value="" disabled selected>Select a player</option>
+              <option value="RW">RW</option>
+              <option value="ST">ST</option>
+              <option value="LW">LW</option>
+              <option value="RCM">RCM</option>
+              <option value="CM">CM</option>
+              <option value="LCM">LCM</option>
+              <option value="RCM">RCM</option>
+              <option value="RB">RB</option>
+              <option value="RCB">RCB</option>
+              <option value="LCB">LCB</option>
+              <option value="LB">LB</option>
+              <option value="GK">GK</option>
+            </select>
+            <label class="text-white" for="stats">Player's Stats</label>
+            <div class="grid grid-cols-2 gap-2">
+              <input type="number" id="pac" class="p-2 text-black rounded-md" placeholder="PAC">
+              <input type="number" id="shoot" class="p-2 text-black rounded-md" placeholder="SHOOT">
+              <input type="number" id="pass" class="p-2 text-black rounded-md" placeholder="PASS">
+              <input type="number" id="dribble" class="p-2 text-black rounded-md" placeholder="DRIBBLE">
+              <input type="number" id="defence" class="p-2 text-black rounded-md" placeholder="DEFENCE">
+              <input type="number" id="physique" class="p-2 text-black rounded-md" placeholder="PHYSIQUE">
+            </div>
+            <button id="create" class="bg-green-500 p-2 mt-4 rounded-full hover:bg-green-600">Add Player</button>
+          </form>
         </div>
     </div>
+  </div>
+
+  <div id="filtredplayermodal" class="fixed inset-0 hidden justify-center items-center bg-black bg-opacity-45">
     
-</div>
-<div id="modal" class="fixed top-1/3 text-white hidden left-[100px] z-50 h-[fit-content] flex justify-center  w-1/5 bg-black border border-gray-300 shadow-lg rounded-lg p-4">
+    <div class="px-10 bg-green-200 max-h-max max-w-max rounded-xl">
+    
+        <div class="font-Raleway mt-16 ml-6 mb-7">
+            <p class="text-xl">Players You can add here :</p>
+        </div>
+    <div id="playerstoadd" class="grid grid-cols-6 px-10 bg-green-200 max-h-max max-w-max">
+        <div>
+            
+        </div>
+    </div>
+    <!-- addbtn -->
+     <div class="flex justify-end pb-6 gap-3">
+    <!-- <input id="addToFormation" type="button" value="Add to Formation" class="bg-[#0dd962] hover:bg-[#128040] duration-200 px-6 py-3 rounded-full cursor-pointer "> -->
+    <input type="button" value="Cancel" class="bg-red-500 text-white hover:bg-red-800 duration-200 px-6 py-3 rounded-full cursor-pointer " onclick="document.getElementById('filtredplayermodal').classList.add('hidden')">
+    </div>
+    </div>
+  </div>
 
-</div>
-<!-- Modal Background -->
-<div id="editplayerModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50 ">
-  <!-- Modal Content -->
-  <div id="editplayer" class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
-    <form id="createForm" class="flex flex-col space-y-3 w-full text-center">
-      <label for="nameedit">Player's Name</label>
-      <input type="text" id="nameedit" class="p-2 text-black rounded-md" placeholder="Enter player name">
-      <label for="positionedit">Player's Position</label>
-      <select id="positionedit" class="p-2 text-black rounded-md">
-          <option value="" selected disabled>Select Position</option>
-          <option value="bench">Bench</option> 
 
-          
-      </select>
-      <button id="addtofield" type="submit" class="bg-green-500 p-2 mt-4 rounded-full hover:bg-green-600">Add Player</button>
-    </form>
-    <!-- Close Modal Button -->
-    <button onclick="document.getElementById('editplayerModal').style.display='none'" id="closeModal" class="absolute top-2 right-2 p-2 text-gray-500 hover:text-gray-800">X</button>
+<div id="warningmodal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+  <div class="bg-red-50 dark:bg-gray-800 p-6 rounded-lg w-96 relative text-red-800 dark:text-red-400">
+    <h2 class="text-xl font-semibold text-center mb-4">Alert</h2>
+    <div class="flex p-4 mb-4 text-sm" role="alert">
+      <svg class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+      </svg>
+      <span class="sr-only">Danger</span>
+      <div>
+        <span class="font-medium">Ensure that these requirements are met:</span>
+        <ul class="mt-1.5 list-disc list-inside">
+          <li id="errormsg" >At least 10 characters (and up to 100 characters)</li>
+        </ul>
+      </div>
+    </div>
+    <button id="closeModal" onclick="document.getElementById('warningmodal').style.display= 'none'" class="absolute text-red-500 top-2 right-2 text-black hover:text-red-500">X</button>
   </div>
 </div>
+
+
+
 
   <!-- end header  -->
   <script src="js/main.js"></script>
