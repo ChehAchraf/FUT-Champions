@@ -2,6 +2,7 @@ let addedToSquadArr = [];
 let notAddTosquad = [];
 let createdPlayer = [];
 let obj = {};
+let bench = document.getElementById('bench')
 let playersdata = new XMLHttpRequest();
 playersdata.open("GET", "https://achraf.brofortech.com/pl.json", true);
 playersdata.send();
@@ -80,21 +81,18 @@ function push(data) {
       "cursor-pointer bg-[url('img/badge_gold.webp')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center"
     );
   
-    // Check if the player status is "bench" and place them in the bench div
-    if (player.status === "bench") {
-      // Append directly to the bench div
+    if (player.status == "bench") {
+
       bench.appendChild(temp_div);
       temp_div.innerHTML = generatePlayerCardHTML(player);
     } else if (player.position !== "GK") {
-      // Add player card logic for non-GK players (other positions)
+
       temp_div.innerHTML = generatePlayerCardHTML(player);
-      // Optionally append them to a different section
+
     } else {
-      // Add GK-specific card logic if needed
+
       temp_div.innerHTML = generatePlayerCardHTML(player);
     }
-  
-    // Add delete icon logic
     addDeleteIcon(temp_div, player);
   
   });
@@ -142,7 +140,6 @@ function generatePlayerCardHTML(player) {
       </div>
     `;
   } else {
-    // GK-specific HTML rendering
     return `
       <div class="flex">
         <div class="flex flex-col mr-[-8px] text-[#362f16] items-center">
@@ -203,7 +200,6 @@ function addDeleteIcon(div, player) {
 
 
     function addFiltreplayerToPosition(positionFilter) {
-      const bench = document.getElementById('bench');
       const filteredPlayers = data.filter(
         (player) => player.position === positionFilter
       );
@@ -306,6 +302,7 @@ function addDeleteIcon(div, player) {
           let positionElement = document.querySelector(
             `[player-position="${player.position}"]`
           );
+
           positionElement.classList.remove("bg-[url('img/bg.png')]");
           positionElement.classList.add("bg-[url('img/badge_gold.webp')]");
 
@@ -400,22 +397,36 @@ function addDeleteIcon(div, player) {
           data.status = "field"
           generatePlayerCardHTML(player)
           let img = document.createElement("img");
+          let pen = document.createElement("img")
           img.setAttribute(
             "class",
             "w-5 bg-red-500 rounded-full  hover:scale-110 relative bottom-[150px] left-[45px] hidden"
           );
+          pen.setAttribute(
+            "class",
+            "w-5 bg-green-500 rounded-full  hover:scale-110 relative  bottom-[131px] right-[45px] hidden"
+          );
           img.setAttribute("src", "/img/delete.svg");
           img.setAttribute("alt", "deleteico");
-
+          pen.setAttribute("src", "/img/pen.svg");
+          pen.setAttribute("alt", "penicon");
           positionElement.addEventListener("mouseover", function () {
             img.classList.remove("hidden");
             img.classList.add("block");
+            pen.classList.remove("hidden");
+            pen.classList.add("block");
           });
           positionElement.addEventListener("mouseleave", function () {
             img.classList.remove("block");
             img.classList.add("hidden");
+            pen.classList.remove("block");
+            pen.classList.add("hidden");
           });
-
+          pen.addEventListener('click',function(e){
+            e.stopPropagation();
+            document.getElementById('edit_form').style.display = 'flex';
+            document.getElementById('edit_name').value = player.name
+          })
           img.addEventListener("click", function (event) {
             event.stopPropagation();
 
@@ -444,7 +455,7 @@ function addDeleteIcon(div, player) {
 
             positionElement.classList.add("bg-[url('img/bg.png')]");
             positionElement.classList.remove("bg-[url('img/badge_gold.webp')]");
-
+            
             document
               .getElementById("filtredplayermodal")
               .classList.add("hidden");
@@ -452,10 +463,9 @@ function addDeleteIcon(div, player) {
               .getElementById("filtredplayermodal")
               .classList.remove("flex");
           });
-
+          positionElement.appendChild(pen)
           positionElement.appendChild(img);
 
-          // add players added to squad to an array
           function updateSquadPlayers() {
             addedToSquadArr.push(player);
             console.log(addedToSquadArr);
@@ -470,7 +480,7 @@ function addDeleteIcon(div, player) {
         playerstoadd.appendChild(div);
       });
     }
-
+   
     document.querySelectorAll(".position-button").forEach((button) => {
       button.addEventListener("click", function () {
         const position = button.getAttribute("player-position");
@@ -492,3 +502,8 @@ function addDeleteIcon(div, player) {
     });
   }
 };
+function edit(data){
+  div.addEventListener('click' , function () {
+    alert('hello')
+  })
+}
