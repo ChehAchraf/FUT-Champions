@@ -33,13 +33,17 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body >
-  <!-- start header  -->
+  <header class="bg-black">
+    <nav class="p-6 flex justify-center">
+      <h1 class="text-white">Squad <span class="text-green-500">Maker</span></h1>
+    </nav>
+  </header>
   <div class="min-h-screen bg-[url('../img/leader.jpg')] bg-top bg-cover bg-no-repeat ">
-    <div class="w-full min-h-[100px] bg-black bg-opacity-70 p-24 flex justify-between flex-wrap">
-      <section id=="field" class="w-[65%] bg-[url('img/stadium.webp')] h-[100vh] w-[56rem] bg-no-repeat ml-10 mt-6 bg-opacity-50">
+    <div class="w-full min-h-[100px] bg-black bg-opacity-70 md:p-24 flex flex-col md:flex-row  justify-between flex-wrap">
+      <section id=="field" class="w-full md:w-[65%]  bg-[url('img/stadium.webp')] h-[100vh] w-[56rem] bg-center bg-no-repeat md:ml-10 mt-6 bg-opacity-50 overflow-hidden">
     
         <!-- attackers -->
-        <div id="attackers" class="flex items-start justify-center gap-14">
+        <div id="attackers" class="flex items-start justify-center md:gap-14">
             <div id="LW" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button selected-position" player-position="LW">
               
                 <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700" alt="add">
@@ -56,8 +60,8 @@
     
             </div>
           </div>
-        <!-- medfilders -->
-        <div class="flex items-center justify-center gap-14">
+        <!-- middle -->
+        <div class="flex items-center justify-center md:gap-14">
             <div id="LCM" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button selected-position" player-position = "LCM">
                 <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700"  alt="add">
                 
@@ -69,8 +73,8 @@
                 <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700"  alt="add">
             </div>
         </div>
-        <!-- defenderse -->
-        <div class="flex items-center justify-center gap-14">
+        <!-- defe -->
+        <div class="flex  items-center justify-center gap-1 md:gap-14">
             <div id="LB" class="cursor-pointer bg-[url('img/bg.png')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center position-button" player-position = "LB">
                 <img src="/img/add.svg" class="mt-9 w-8 cursor-pointer bg-black rounded-full hover:bg-red-700"  alt="add">
             </div>
@@ -94,7 +98,7 @@
     
       </section>
 
-        <div id="create_form" class="bg-black bg-opacity-30 w-[30%] rounded-lg pb-8">
+        <div id="create_form" class="bg-black bg-opacity-30 md:w-[30%] rounded-lg pb-8">
           <form id="createForm" class="flex flex-col space-y-3 w-3/4 text-center mt-8 m-auto">
             <label class="text-white" for="name">Player's Name</label>
             <input type="text" id="name" class="p-2 text-black rounded-md" placeholder="Enter player name">
@@ -135,7 +139,7 @@
             <button id="create" class="bg-green-500 p-2 mt-4 rounded-full hover:bg-green-600">Add Player</button>
           </form>
         </div>
-        <div id="bench" class="w-[65%] bg-black p-16 rounded-lg bg-opacity-30 grid grid-cols-4 gap-4">
+        <div id="bench" class="w-full md:w-[65%] bg-black md:p-16 rounded-lg bg-opacity-30 grid grid-cols-3 gap-2 md:grid-cols-4 md:gap-4">
 
         </div>
     </div>
@@ -205,19 +209,17 @@
 
   <div id="filtredplayermodal" class="fixed inset-0 hidden justify-center items-center bg-black bg-opacity-45">
     
-    <div class="px-10 bg-green-200 max-h-max max-w-max rounded-xl">
+    <div class="px-10 bg-green-200 max-h-max max-w-max rounded-xl ">
     
         <div class="font-Raleway mt-16 ml-6 mb-7">
             <p class="text-xl">Players You can add here :</p>
         </div>
-    <div id="playerstoadd" class="grid grid-cols-6 px-10 bg-green-200 max-h-max max-w-max">
+    <div id="playerstoadd" class="grid grid-cols-2 md:grid-cols-6 px-10  bg-green-200">
         <div>
             
         </div>
     </div>
-    <!-- addbtn -->
      <div class="flex justify-end pb-6 gap-3">
-    <!-- <input id="addToFormation" type="button" value="Add to Formation" class="bg-[#0dd962] hover:bg-[#128040] duration-200 px-6 py-3 rounded-full cursor-pointer "> -->
     <input type="button" value="Cancel" class="bg-red-500 text-white hover:bg-red-800 duration-200 px-6 py-3 rounded-full cursor-pointer " onclick="document.getElementById('filtredplayermodal').classList.add('hidden')">
     </div>
     </div>
@@ -243,10 +245,10 @@
   </div>
 </div>
 
-
-
-
-  <!-- end header  -->
+<footer class="p-24 bg-black flex justify-center">
+  <h1 class="text-white">CodeBenders-2024</h1>
+  
+</footer>
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -14,6 +14,7 @@ playersdata.onreadystatechange = function () {
     let data = ourdata.players;
     document.getElementById("create").addEventListener("click", function (e) {
       e.preventDefault();
+      
       let name = document.getElementById("name");
       let position = document.getElementById("position");
       let pac = document.getElementById("pac");
@@ -25,9 +26,17 @@ playersdata.onreadystatechange = function () {
       let photo = document.getElementById('profile');
       let flag = document.getElementById('flag');
       let rate = document.getElementById('rate');
+      let diving = document.getElementById('diving');
+      let handling = document.getElementById('handling');
+      let kicking = document.getElementById('kicking');
+      let reflexes = document.getElementById('reflexes');
+      let speed = document.getElementById('speed');
+      let positioning = document.getElementById('positioning');
+      
       let nameRegex = /^[A-Za-z\s]+$/;
       let statRegex = /^[1-9][0-9]?$|^100$/;
-       obj = {
+    
+      obj = {
         id: createdPlayer.length,
         name: name.value,
         position: position.value,
@@ -38,23 +47,26 @@ playersdata.onreadystatechange = function () {
         defending: defence.value,
         physical: physique.value,
         photo: photo.value,
-        flag : flag.value,
-        logo : logo.value,
-        club : club.value,
-        rating : rate.value,
-        status : "bench"
+        flag: flag.value,
+        logo: logo.value,
+        club: club.value,
+        rating: rate.value,
+
+        status: "bench"
       };
+      
       if (!name.value || !nameRegex.test(name.value)) {
         document.getElementById("warningmodal").style.display = "flex";
         document.getElementById("errormsg").innerText = "Add Only letters";
         return;
       }
+      
       if (!position.value) {
         document.getElementById("warningmodal").style.display = "flex";
-        document.getElementById("errormsg").innerText =
-          "Please select a player position";
+        document.getElementById("errormsg").innerText = "Please select a player position";
         return;
       }
+      
       if (
         !statRegex.test(pac.value) ||
         !statRegex.test(shoot.value) ||
@@ -64,14 +76,122 @@ playersdata.onreadystatechange = function () {
         !statRegex.test(physique.value)
       ) {
         document.getElementById("warningmodal").style.display = "flex";
-        document.getElementById("errormsg").innerText =
-          "Please enter valid stats (numbers between 1 and 100).";
+        document.getElementById("errormsg").innerText = "Please enter valid stats (numbers between 1 and 100).";
         return;
       }
-      data.push(obj)
-      push(data)
+    
+
+      data.push(obj);
+    
+
+      const playerDiv = document.createElement("div");
+      playerDiv.classList.add("player-card"); 
+      playerDiv.setAttribute(
+        "class",
+        "cursor-pointer bg-[url('img/badge_gold.webp')] bg-no-repeat bg-center bg-cover w-32 h-44 flex flex-col pt-8 items-center"
+      );
+
+      if (obj.position === "GK") {
+        playerDiv.innerHTML = `
+          <div class="flex">
+            <div class="flex flex-col mr-[-8px] text-[#362f16] items-center">
+              <span class="mb-[-5px] font-bold">${obj.rating}</span>
+              <span class="text-[10px] font-medium">${obj.position}</span>
+            </div>
+            <img class="w-20" src="${obj.photo}" alt="${obj.name}">
+          </div>
+          <p class="font-Raleway text-[11px] font-bold text-[#362f16] mb-[-4px]">${obj.name}</p>
+          <div class="text-[#362f16] gap-1 flex">
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">DIV</span>
+              <span class="font-bold text-[10px]">${obj.diving}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">HAN</span>
+              <span class="font-bold text-[10px]">${obj.handling}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">KIC</span>
+              <span class="font-bold text-[10px]">${obj.kicking}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">REF</span>
+              <span class="font-bold text-[10px]">${obj.reflexes}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">SPE</span>
+              <span class="font-bold text-[10px]">${obj.speed}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">POS</span>
+              <span class="font-bold text-[10px]">${obj.positioning}</span>
+            </div>
+          </div>
+          <div class="flex justify-center items-center w-3 gap-2">
+            <img src="${obj.flag}" alt="${obj.name}">
+            <img src="${obj.logo}" alt="${obj.club}">
+          </div>
+        `;
+      } else {
+        playerDiv.innerHTML = `
+          <div class="flex">
+            <div class="flex flex-col mr-[-8px] text-[#362f16] items-center">
+              <span class="mb-[-5px] font-bold">${obj.rating}</span>
+              <span class="text-[10px] font-medium">${obj.position}</span>
+            </div>
+            <img class="w-20" src="${obj.photo}" alt="${obj.name}">
+          </div>
+          <p class="font-Raleway text-[11px] font-bold text-[#362f16] mb-[-4px]">${obj.name}</p>
+          <div class="text-[#362f16] gap-1 flex">
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">PAC</span>
+              <span class="font-bold text-[10px]">${obj.pace}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">SHO</span>
+              <span class="font-bold text-[10px]">${obj.shooting}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">PAS</span>
+              <span class="font-bold text-[10px]">${obj.passing}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">DRI</span>
+              <span class="font-bold text-[10px]">${obj.dribbling}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">DEF</span>
+              <span class="font-bold text-[10px]">${obj.defending}</span>
+            </div>
+            <div class="flex flex-col gap-0 justify-center items-center">
+              <span class="text-[7px] font-medium mb-[-4px]">PHY</span>
+              <span class="font-bold text-[10px]">${obj.physical}</span>
+            </div>
+          </div>
+          <div class="flex justify-center items-center w-3 gap-2">
+            <img src="${obj.flag}" alt="${obj.name}">
+            <img src="${obj.logo}" alt="${obj.club}">
+          </div>
+        `;
+      }
+    
+      const bench = document.getElementById("bench");
+      bench.appendChild(playerDiv);
+      
+      name.value = "";
+      position.value = "";
+      pac.value = "";
+      shoot.value = "";
+      pass.value = "";
+      dribble.value = "";
+      defence.value = "";
+      physique.value = "";
+      photo.value = "";
+      flag.value = "";
+      rate.value = "";
     });
     
+    push(data)
 
 function push(data) {
   data.forEach(player => {
@@ -473,10 +593,10 @@ function addFiltreplayerToPosition(positionFilter) {
               player.speed = document.getElementById('edit_speed').value;
               player.rating = document.getElementById('edit_rating').value;
             
-              let positionElement = document.querySelector(`[player-position="${player.position}"]`);
+              let positionElemente = document.querySelector(`[player-position="${player.position}"]`);
               
-              if (positionElement) {
-                positionElement.innerHTML = `
+              if (positionElemente) {
+                positionElemente.innerHTML = `
                   <div class="flex">
                     <div class="flex flex-col mr-[-8px] text-[#362f16] items-center">
                       <span class="mb-[-5px] font-bold">${player.rating}</span>
@@ -516,8 +636,8 @@ function addFiltreplayerToPosition(positionFilter) {
                     <img src="${player.logo}" alt="${player.club}">
                   </div>
                 `;
-                positionElement.appendChild(img)
-                positionElement.appendChild(pen)
+                positionElemente.appendChild(img)
+                positionElemente.appendChild(pen)
               }
               
               console.log(data);
