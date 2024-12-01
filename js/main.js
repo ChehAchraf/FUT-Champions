@@ -69,9 +69,9 @@ playersdata.onreadystatechange = function () {
         return;
       }
       data.push(obj)
-      console.log(data)
+      push(data)
     });
-    push(data)
+    
 
 function push(data) {
   data.forEach(player => {
@@ -199,7 +199,7 @@ function addDeleteIcon(div, player) {
 }
 
 
-    function addFiltreplayerToPosition(positionFilter) {
+function addFiltreplayerToPosition(positionFilter) {
       const filteredPlayers = data.filter(
         (player) => player.position === positionFilter
       );
@@ -362,7 +362,7 @@ function addDeleteIcon(div, player) {
             </div>
             <img class="w-20" src="${player.photo}" alt="${player.name}">
           </div>
-          <p class="font-Raleway text-[11px] font-bold text-[#362f16] mb-[-4px]">${player.name}</p>
+          <p   class="font-Raleway text-[11px] font-bold  text-[#362f16] mb-[-4px]">${player.name}</p>
           <div class="text-[#362f16] gap-1 flex">
             <div class="flex flex-col gap-0 justify-center items-center">
               <span class=" text-[7px] font-medium mb-[-4px]">DIV</span>
@@ -425,7 +425,104 @@ function addDeleteIcon(div, player) {
           pen.addEventListener('click',function(e){
             e.stopPropagation();
             document.getElementById('edit_form').style.display = 'flex';
-            document.getElementById('edit_name').value = player.name
+            let name = document.getElementById('edit_name').value = player.name
+            let photo = document.getElementById('edit_profile').value = player.photo
+            let flag =  document.getElementById('edit_flag').value = player.flag
+            let logo = document.getElementById('edit_logo').value = player.logo
+            let club =  document.getElementById('edit_club').value = player.club
+            let position =  document.getElementById('edit_position').value = player.position
+            let pace =  document.getElementById('edit_pac').value = player.pace
+            let shooting =  document.getElementById('edit_shoot').value = player.shooting
+            let passing =  document.getElementById('edit_pass').value = player.passing
+            let dribbling =  document.getElementById('edit_dribble').value = player.dribbling
+            let defending =  document.getElementById('edit_defence').value = player.defending
+            let physical =  document.getElementById('edit_physique').value = player.physical
+            let diving =  document.getElementById('edit_diving').value = player.diving
+            let handling =  document.getElementById('edit_handling').value = player.handling
+            let kicking = document.getElementById('edit_kicking').value = player.kicking
+            let reflexes =  document.getElementById('edit_reflexes').value = player.reflexes
+            let speed =  document.getElementById('edit_speed').value = player.speed
+            let rating =  document.getElementById('edit_rating').value = player.rating
+            if(player.position == 'GK'){
+              document.getElementById('numbers_edit').style.display ="none"
+              document.getElementById('numbers_edit_1').style.display ="grid"
+            }else{
+              document.getElementById('numbers_edit').style.display ="grid"
+              document.getElementById('numbers_edit_1').style.display ="none"
+
+            }
+            document.getElementById('edit_form').addEventListener('submit', function(e) {
+              e.preventDefault();
+            
+              player.name = document.getElementById('edit_name').value;
+              player.photo = document.getElementById('edit_profile').value;
+              player.flag = document.getElementById('edit_flag').value;
+              player.logo = document.getElementById('edit_logo').value;
+              player.club = document.getElementById('edit_club').value;
+              player.position = document.getElementById('edit_position').value;
+              player.pace = document.getElementById('edit_pac').value;
+              player.shooting = document.getElementById('edit_shoot').value;
+              player.passing = document.getElementById('edit_pass').value;
+              player.dribbling = document.getElementById('edit_dribble').value;
+              player.defending = document.getElementById('edit_defence').value;
+              player.physical = document.getElementById('edit_physique').value;
+              player.diving = document.getElementById('edit_diving').value;
+              player.handling = document.getElementById('edit_handling').value;
+              player.kicking = document.getElementById('edit_kicking').value;
+              player.reflexes = document.getElementById('edit_reflexes').value;
+              player.speed = document.getElementById('edit_speed').value;
+              player.rating = document.getElementById('edit_rating').value;
+            
+              let positionElement = document.querySelector(`[player-position="${player.position}"]`);
+              
+              if (positionElement) {
+                positionElement.innerHTML = `
+                  <div class="flex">
+                    <div class="flex flex-col mr-[-8px] text-[#362f16] items-center">
+                      <span class="mb-[-5px] font-bold">${player.rating}</span>
+                      <span class="text-[10px] font-medium">${player.position}</span>
+                    </div>
+                    <img class="w-20" src="${player.photo}" alt="${player.name}">
+                  </div>
+                  <p class="font-Raleway text-[11px] font-bold text-[#362f16] mb-[-4px]">${player.name}</p>
+                  <div class="text-[#362f16] gap-1 flex">
+                    <div class="flex flex-col gap-0 justify-center items-center">
+                      <span class=" text-[7px] font-medium mb-[-4px]">PAC</span>
+                      <span class="font-bold text-[10px]">${player.pace}</span>
+                    </div>
+                    <div class="flex flex-col gap-0 justify-center items-center">
+                      <span class=" text-[7px] font-medium mb-[-4px]">SHO</span>
+                      <span class="font-bold text-[10px]">${player.shooting}</span>
+                    </div>
+                    <div class="flex flex-col gap-0 justify-center items-center">
+                      <span class=" text-[7px] font-medium mb-[-4px]">PAS</span>
+                      <span class="font-bold text-[10px]">${player.passing}</span>
+                    </div>
+                    <div class="flex flex-col gap-0 justify-center items-center">
+                      <span class=" text-[7px] font-medium mb-[-4px]">DRI</span>
+                      <span class="font-bold text-[10px]">${player.dribbling}</span>
+                    </div>
+                    <div class="flex flex-col gap-0 justify-center items-center">
+                      <span class=" text-[7px] font-medium mb-[-4px]">DEF</span>
+                      <span class="font-bold text-[10px]">${player.defending}</span>
+                    </div>
+                    <div class="flex flex-col gap-0 justify-center items-center">
+                      <span class=" text-[7px] font-medium mb-[-4px]">PHY</span>
+                      <span class="font-bold text-[10px]">${player.physical}</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-center items-center w-3 gap-2">
+                    <img src="${player.flag}" alt="${player.name}">
+                    <img src="${player.logo}" alt="${player.club}">
+                  </div>
+                `;
+                positionElement.appendChild(img)
+                positionElement.appendChild(pen)
+              }
+              
+              console.log(data);
+            });
+            
           })
           img.addEventListener("click", function (event) {
             event.stopPropagation();
@@ -479,9 +576,9 @@ function addDeleteIcon(div, player) {
         });
         playerstoadd.appendChild(div);
       });
-    }
+}
    
-    document.querySelectorAll(".position-button").forEach((button) => {
+document.querySelectorAll(".position-button").forEach((button) => {
       button.addEventListener("click", function () {
         const position = button.getAttribute("player-position");
         addFiltreplayerToPosition(position);
@@ -491,8 +588,8 @@ function addDeleteIcon(div, player) {
           .getElementById("filtredplayermodal")
           .classList.remove("hidden");
       });
-    });
-    document.querySelectorAll(".substitution").forEach((button) => {
+});
+document.querySelectorAll(".substitution").forEach((button) => {
       button.addEventListener("click", function () {
         document.getElementById("filtredplayermodal").classList.add("flex");
         document
@@ -502,8 +599,3 @@ function addDeleteIcon(div, player) {
     });
   }
 };
-function edit(data){
-  div.addEventListener('click' , function () {
-    alert('hello')
-  })
-}

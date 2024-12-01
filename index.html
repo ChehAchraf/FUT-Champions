@@ -176,7 +176,7 @@
       </select>
   
       <label class="text-gray-700" for="edit_stats">Player's Stats</label>
-      <div class="grid grid-cols-2 gap-2">
+      <div id="numbers_edit" class="grid grid-cols-2 gap-2">
         <input type="number" id="edit_pac" class="p-2 text-black rounded-md" placeholder="PAC">
         <input type="number" id="edit_shoot" class="p-2 text-black rounded-md" placeholder="SHOOT">
         <input type="number" id="edit_pass" class="p-2 text-black rounded-md" placeholder="PASS">
@@ -185,10 +185,18 @@
         <input type="number" id="edit_physique" class="p-2 text-black rounded-md" placeholder="PHYSIQUE">
         <input type="number" id="edit_rate" class="p-2 text-black rounded-md" placeholder="Rate">
       </div>
+      <div id="numbers_edit_1" class="grid grid-cols-2 gap-2 hidden">
+        <input type="number" id="edit_diving" class="p-2 text-black rounded-md" placeholder="diving">
+        <input type="number" id="edit_handling" class="p-2 text-black rounded-md" placeholder="Handling">
+        <input type="number" id="edit_kicking" class="p-2 text-black rounded-md" placeholder="Kicking">
+        <input type="number" id="edit_reflexes" class="p-2 text-black rounded-md" placeholder="Reflexes">
+        <input type="number" id="edit_speed" class="p-2 text-black rounded-md" placeholder="Speed">
+        <input type="number" id="edit_rating" class="p-2 text-black rounded-md" placeholder="rate">
+      </div>
   
       <div class="flex justify-between gap-4 mt-4">
         <button onclick="document.getElementById('edit_form').style.display = 'none'" type="button" id="edit_cancel" class="bg-gray-500 text-white p-2 rounded-full hover:bg-gray-600">Cancel</button>
-        <button type="submit" id="edit_save" class="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600">Save Changes</button>
+        <button type="editsubmit" id="edit_save" class="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600">Save Changes</button>
       </div>
     </form>
   </div>
